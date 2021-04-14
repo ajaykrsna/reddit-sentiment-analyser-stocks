@@ -1,94 +1,59 @@
-# Docker Container wallstreetbets-sentiment-analysis
+# r/Wallstreetbets sentiment analysis
+This program finds the most mentioned ticker on r/wallstreetbets and uses Vader SentimentIntensityAnalyzer to calculate the sentiment analysis.
 
-A docker container using restful endpoints exposed on port 5000 "/analyze" to gather sentiment analysis on the wsb subreddit.
-* [Check out the main branch for non docker/web version](https://github.com/asad70/wallstreetbets-sentiment-analysis/tree/main)
+Check out the improved version of sentiment analysis: https://github.com/asad70/reddit-sentiment-analysis
+
+# About r/wallstreetbets
+WSB is a subreddit community on Reddit where participants discuss stock and options trading. It's aggressive trading strategies revolve around highly speculative, leveraged options trading. Some of the members tend to use borrowed capital, like student loans or margin.
+
+## Sample Output
+It took 350.54 seconds to analyze 7085 comments in 16 posts.
+
+Posts analyzed:\
+Weekend Discussion Thread for the Weekend of January 01, 2021\
+How I'm making money while I lose money\
+Nio has just been orbiting earth to build up momentum to sling shot to the moon🚀🚀🚀🚀\
+.\
+[Includes the title of all the posts analyzed (16 posts in this example)]\
+.\
+Bloomberg Getting In On Our Lingo
+
+10 most mentioned picks:\
+GME: 134\
+PLTR: 119\
+NIO: 101\
+TSLA: 96\
+BABA: 41\
+AAPL: 28\
+SQ: 23\
+RIOT: 19\
+U: 14\
+PSTH: 14
 
 
-## Getting Started
+Sentiment analysis of top 5 picks:\
+&nbsp; &nbsp; &nbsp; &nbsp; Bearish &nbsp; Neutral &nbsp; Bullish &nbsp; Total/Compound\
+GME    &nbsp; 0.057  &nbsp;  0.856  &nbsp;&nbsp;   0.087      &nbsp; &nbsp; &nbsp;     0.055\
+PLTR  &nbsp;  0.071  &nbsp;  0.847  &nbsp;&nbsp;   0.082    &nbsp;  &nbsp;  &nbsp;   -0.035\
+NIO   &nbsp;  0.044  &nbsp;  0.849  &nbsp;&nbsp;   0.106     &nbsp; &nbsp;  &nbsp;    0.148\
+TSLA  &nbsp;  0.068  &nbsp;  0.829  &nbsp;&nbsp;   0.103     &nbsp;  &nbsp; &nbsp;   0.175\
+BABA  &nbsp;  0.069  &nbsp;  0.862  &nbsp;&nbsp;   0.070     &nbsp;  &nbsp; &nbsp;   0.077\
+![](mentioned.png)
+![](sentiment.png)
 
-These instructions will cover usage information and for the docker container 
+## Data:
+Includes US stocks with market cap > 100 Million, and price above $3. As wsb doesn't allow penny stocks discussions.\
+Source:  https://www.nasdaq.com/market-activity/stocks/screener?exchange=nasdaq&letter=0&render=download 
 
-### Prerequisities
 
+Implementation:
+I am using sets to compare that if the ticker is valid, sets time complexity for
+"x in s" is O(1) compare to list: O(n).
 
-In order to run this container you'll need docker installed.
-
-* [Windows](https://docs.docker.com/windows/started)
-* [OS X](https://docs.docker.com/mac/started/)
-* [Linux](https://docs.docker.com/linux/started/)
-
-### Usage
-
-#### Container Startup
-
-List the different parameters available to your container
-
-```shell
-docker run -p 5000:5000 -e CLIENT_ID= -e CLIENT_SECRET= -e USERNAME= -e PASSWORD= restfulleo/wallstreetbets-sentiment-analysis
-```
-
-#### Environment Variables
-
-* `CLIENT_ID` - A client_id from valid reddit account with a developer application setup.
-* `CLIENT_SECRET` - A client_secret from that developer application setup for the reddit account.
-* `USERNAME` - The username for the reddit account used above.
-* `PASSWORD` - The password used for the reddit account.
-
-#### Useful File Locations
-
-* `/app` - source directory
-
-## Built With
-
-* astroid==2.4.2
-* certifi==2020.12.5
-* chardet==4.0.0
-* click==7.1.2
-* colorama==0.4.4
-* cycler==0.10.0
-* Flask==1.1.2
-* idna==2.10
-* isort==5.7.0
-* itsdangerous==1.1.0
-* Jinja2==2.11.2
-* joblib==1.0.0
-* kiwisolver==1.3.1
-* lazy-object-proxy==1.4.3
-* MarkupSafe==1.1.1
-* matplotlib==3.3.3
-* mccabe==0.6.1
-* nltk==3.5
-* numpy==1.19.5
-* pandas==1.2.1
-* Pillow==8.1.0
-* praw==7.1.0
-* prawcore==1.5.0
-* pylint==2.6.0
-* pyparsing==2.4.7
-* python-dateutil==2.8.1
-* pytz==2020.5
-* regex==2020.11.13
-* requests==2.25.1
-* rope==0.18.0
-* six==1.15.0
-* squarify==0.4.3
-* toml==0.10.2
-* tqdm==4.56.0
-* update-checker==0.18.0
-* urllib3==1.26.2
-* websocket-client==0.57.0
-* Werkzeug==1.0.1
-* wrapt==1.12.1
-
-## Find Us
-
-* [GitHub](https://github.com/asad70/wallstreetbets-sentiment-analysis)
-
-## Authors
-
-* **asad70** - *Initial work* - [PurpleBooth](https://github.com/asad70)
-* **RestfulLeo23** - *Docker work* - [PurpleBooth](https://github.com/RestfulLeo23)
+Limitations:
+It depends mainly on the defined parameters for current implementation:
+It completely ignores the heavily downvoted comments, and there can be a time when
+the most mentioned ticker is heavily downvoted, but you can change that in upvotes variable.
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+[MIT](https://choosealicense.com/licenses/mit/)
