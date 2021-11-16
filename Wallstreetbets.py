@@ -9,7 +9,7 @@ Limitations:
 It depends mainly on the defined parameters for current implementation:
 It completely ignores the heavily downvoted comments, and there can be a time when
 the most mentioned ticker is heavily downvoted, but you can change that in upvotes variable.
-Author: github:asad70
+Author: github:ajaykrsna
 -------------------------------------------------------------------
 ****************************************************************************'''
 import praw
